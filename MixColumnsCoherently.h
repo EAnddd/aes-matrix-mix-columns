@@ -13,7 +13,7 @@
 NTL::mat_GF2 createFixedMatrix();
 int mixColumns(const char *fileName, const char *resultFileName);
 void readColumn(const char *name);
-void addLineOrCount(const char *fileName, NTL::mat_GF2& matGf2, NTL::mat_GF2& fixedMatrix, std::ofstream &file);
-NTL::mat_GF2 multiplyMatrixes(NTL::mat_GF2 &mat, NTL::mat_GF2 &mat1);
+void addLine(const char *fileName, NTL::mat_GF2& matGf2, NTL::mat_GF2 fixedMatrix[]);
+void count(std::ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &fixedMatrix);
 
 #endif //SUPERCOMPUTERS_MIXCOLUMNSCOHERENTLY_H
