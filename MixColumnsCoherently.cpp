@@ -50,7 +50,7 @@ void readColumn(const char *name) {
 
     start = std::clock();
     count(resultFile, matrixesFromFile, fixedMatrix);
-    std::cout << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
+    resultFile << "\nTime: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 
     myfile.close();
 }
