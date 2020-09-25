@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-    generateNMatrixes(1, "matrix.txt");
-    mixColumns("matrix.txt", "result.txt");
+    int matrixQuantity = generateNMatrixes(1, "matrix.txt");
+    mixColumns("matrix.txt", "result.txt", matrixQuantity);
     return 0;
 }

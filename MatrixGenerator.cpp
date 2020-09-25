@@ -13,16 +13,25 @@ int generateNMatrixes(int size, const char *fileName){
     remove(fileName);
     // т.к размер передается в mb, умножим на 1048576, чтобы получить байты
     int currentSize = 0;
-    ofstream matrixFile;
-    matrixFile.open (fileName, std::ios_base::app);
+
+    int matrixQuantity = size * 1048576 / 16;
+    NTL::mat_GF2 matrixesFromFile[matrixQuantity];
+    int j = 0;
     while(currentSize < size * 1048576) {
         NTL::mat_GF2 matGf2;
-        NTL::mat_GF2 a = generateMatrix(matGf2, 4);
-        matrixFile << a;
-        currentSize += sizeof(a);
+        NTL::mat_GF2 generatedMatrix = generateMatrix(matGf2, 4);
+        matrixesFromFile[j] = generatedMatrix;
+        j++;
+        currentSize += sizeof(generatedMatrix);
+    }
+    //write into file matrix array
+    ofstream matrixFile;
+    matrixFile.open (fileName, std::ios_base::app);
+    for(int i = 0; i < matrixQuantity; i++){
+        matrixFile << matrixesFromFile[i];
     }
     matrixFile.close();
-    return 0;
+    return matrixQuantity;
 }
 
 NTL::mat_GF2 generateMatrix(NTL::mat_GF2& M, int p) {
@@ -42,12 +51,7 @@ NTL::mat_GF2 generateMatrix(NTL::mat_GF2& M, int p) {
                 M.put(i,j,rand()%2);
             }
         }
-
-        // если детерминант не 0, матрица инвертируема
-        determinant(det, M);
-        if (det!=0){
-            return M;
-        }
+        return M;
     }
 
     throw exception();

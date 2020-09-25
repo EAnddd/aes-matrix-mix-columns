@@ -11,8 +11,8 @@
 #include <fstream>
 
 NTL::mat_GF2 createFixedMatrix();
-int mixColumns(const char *fileName, const char *resultFileName);
-void readColumn(const char *name);
+int mixColumns(const char *fileName, const char *resultFileName, int matrixQuantity);
+void readColumn(const char *name, int matrixQuantity);
 void addLine(const char *fileName, NTL::mat_GF2& matGf2, NTL::mat_GF2 fixedMatrix[]);
 void count(std::ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &fixedMatrix);
 

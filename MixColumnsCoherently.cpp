@@ -8,12 +8,12 @@
 using namespace std;
 int counter = 0;
 int matNum = 0;
-int mixColumns(const char *fileName, const char *resultFileName) {
-    readColumn(fileName);
+int mixColumns(const char *fileName, const char *resultFileName, int matrixQuantity) {
+    readColumn(fileName, matrixQuantity);
     return 0;
 }
 
-void readColumn(const char *name) {
+void readColumn(const char *name, int matrixQuantity) {
     ofstream resultFile;
     resultFile.open ("result.txt", std::ios_base::app);
     NTL::mat_GF2 matGf2;
@@ -24,7 +24,7 @@ void readColumn(const char *name) {
     std::clock_t    start;
 
     //i don't know yet how to detect array size properly (the only thought us to divide whole size to one matrix size and add 10% to make sure)
-    NTL::mat_GF2 matrixesFromFile[100000];
+    NTL::mat_GF2 matrixesFromFile[matrixQuantity];
 
     while (std::getline(myfile, str))
     {
@@ -59,7 +59,7 @@ void readColumn(const char *name) {
 
 void addLine(const char *line, NTL::mat_GF2& matGf2,  NTL::mat_GF2 matrixesFromFile[]){
 
-    if(counter < 4){
+    if(counter < 3){
         //until we've got 4 lines, filling matrix
         for(int i = 0; i < 4; i++) {
             matGf2.put(counter, i, line[i]);

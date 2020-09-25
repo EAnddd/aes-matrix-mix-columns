@@ -11,8 +11,6 @@ iostream
 -
 NTL/mat_GF2.h
 -
-NTL/vec_GF2.h
--
 MixColumnsCoherently.h
 /Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.h
 
