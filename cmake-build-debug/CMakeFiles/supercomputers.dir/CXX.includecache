@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.cpp
+iostream
+-
+NTL/mat_GF2.h
+-
+MixColumnsCoherently.h
+/Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.h
+
+/Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.h
+cstdio
+-
+iostream
+-
+NTL/GF2.h
+/Users/elizaveta/CLionProjects/supercomputers/NTL/GF2.h
+NTL/mat_GF2.h
+-
+fstream
+-
+
