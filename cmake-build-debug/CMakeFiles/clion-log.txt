@@ -1,4 +1,20 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/elizaveta/CLionProjects/supercomputers
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/elizaveta/CLionProjects/supercomputers/cmake-build-debug
+CMake Error at CMakeLists.txt:6 (find_package):
+  By not providing "FindNTL.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "NTL", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "NTL" with any of
+  the following names:
+
+    NTLConfig.cmake
+    ntl-config.cmake
+
+  Add the installation prefix of "NTL" to CMAKE_PREFIX_PATH or set "NTL_DIR"
+  to a directory containing one of the above files.  If "NTL" provides a
+  separate development package or SDK, be sure it has been installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/elizaveta/CLionProjects/supercomputers/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/Users/elizaveta/CLionProjects/supercomputers/cmake-build-debug/CMakeFiles/CMakeError.log".

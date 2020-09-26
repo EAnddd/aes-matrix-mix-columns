@@ -13,6 +13,8 @@ NTL/mat_GF2.h
 -
 MixColumnsCoherently.h
 /Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.h
+../../../../usr/local/include/NTL/mat_GF2.h
+/usr/local/include/NTL/mat_GF2.h
 
 /Users/elizaveta/CLionProjects/supercomputers/MixColumnsCoherently.h
 cstdio
@@ -24,5 +26,11 @@ NTL/GF2.h
 NTL/mat_GF2.h
 -
 fstream
+-
+
+/usr/local/include/NTL/mat_GF2.h
+NTL/matrix.h
+-
+NTL/vec_vec_GF2.h
 -
 
