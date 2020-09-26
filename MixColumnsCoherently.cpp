@@ -22,7 +22,7 @@ void readColumn(const char *name, int matrixQuantity) {
     std::ifstream myfile(name);
     std::string str;
     NTL::mat_GF2 fixedMatrix = createFixedMatrix();
-    std::clock_t    start;
+
 
     //i don't know yet how to detect array size properly (the only thought us to divide whole size to one matrix size and add 10% to make sure)
     NTL::mat_GF2 matrixesFromFile[matrixQuantity];
@@ -49,9 +49,7 @@ void readColumn(const char *name, int matrixQuantity) {
 
     }
 
-    start = std::clock();
     count(resultFile, matrixesFromFile, fixedMatrix);
-    resultFile << "\nTime: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 
     myfile.close();
 }
@@ -87,7 +85,9 @@ void count(ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &
     oneColumnMatrix.SetDims(4, 1);
     // column for multiplication
     resultColumn.SetDims(4, 1);
+    std::clock_t    start;
     // iterate through all matrixes (matNum is size we've already found in addLine() method)
+    start = std::clock();
     for(int k = 0; k < matNum; k++) {
 
         matGf2 = matrixesFromFile[k];
@@ -109,6 +109,7 @@ void count(ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &
         resultMatrixes[k] = matGf2;
 
     }
+    resultFile << "\nTime: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
     //write result into file
     for(int i = 0; i < matNum; i++){
         resultFile << resultMatrixes[i];
