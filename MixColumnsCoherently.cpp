@@ -1,32 +1,28 @@
 //
 // Created by Elizaveta on 19.09.2020.
 //
+#include <omp.h>
 #include <iostream>
+#include <utility>
 #include <NTL/mat_GF2.h>
 #include "MixColumnsCoherently.h"
-#include "../../../../usr/local/include/NTL/mat_GF2.h"
+
 
 using namespace std;
 int counter = 0;
 int matNum = 0;
-int mixColumns(const char *fileName, const char *resultFileName, int matrixQuantity) {
-    readColumn(fileName, matrixQuantity);
-    return 0;
+double mixColumns(const string& fileName, const string& resultFileName, long matrixQuantity) {
+   return readColumn(fileName, resultFileName, matrixQuantity);
 }
 
-void readColumn(const char *name, int matrixQuantity) {
-    ofstream resultFile;
-    resultFile.open ("result.txt", std::ios_base::app);
+double readColumn(const string& name, const string& resultFileName,long matrixQuantity) {
+
     NTL::mat_GF2 matGf2;
     matGf2.SetDims(4, 4);
     std::ifstream myfile(name);
     std::string str;
-    NTL::mat_GF2 fixedMatrix = createFixedMatrix();
-
-
-    //i don't know yet how to detect array size properly (the only thought us to divide whole size to one matrix size and add 10% to make sure)
-    NTL::mat_GF2 matrixesFromFile[matrixQuantity];
-
+    printf("nam %ldm \n", matrixQuantity);
+    auto* matrixesFromFile = new NTL::mat_GF2[matrixQuantity];
     while (std::getline(myfile, str))
     {
 
@@ -48,10 +44,11 @@ void readColumn(const char *name, int matrixQuantity) {
         addLine(charLine, matGf2, matrixesFromFile);
 
     }
-
-    count(resultFile, matrixesFromFile, fixedMatrix);
-
+    double finalTime = count(matrixesFromFile, resultFileName);
     myfile.close();
+    matNum = 0;
+    delete [] matrixesFromFile;
+    return finalTime;
 }
 
 
@@ -76,11 +73,12 @@ void addLine(const char *line, NTL::mat_GF2& matGf2,  NTL::mat_GF2 matrixesFromF
 
 }
 
-void count(ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &fixedMatrix){
+double count(NTL::mat_GF2 matrixesFromFile[],  const string& resultFileName){
     NTL::mat_GF2 oneColumnMatrix;
     NTL::mat_GF2 resultColumn;
     NTL::mat_GF2 matGf2;
-    NTL::mat_GF2 resultMatrixes[matNum];
+    auto* resultMatrixes = new NTL::mat_GF2[matNum];
+    NTL::mat_GF2 fixedMatrix = createFixedMatrix();
     // matrix for 1 column
     oneColumnMatrix.SetDims(4, 1);
     // column for multiplication
@@ -88,33 +86,46 @@ void count(ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &
     std::clock_t    start;
     // iterate through all matrixes (matNum is size we've already found in addLine() method)
     start = std::clock();
-    for(int k = 0; k < matNum; k++) {
-
+    int j;
+    int k;
+    int i;
+    int threadID = 0;
+    //OpenMP block, comment to get no-parallel execution
+    omp_set_num_threads(2);
+    #pragma omp parallel for  default(none) private(k, matGf2, i, j) firstprivate(oneColumnMatrix, resultColumn, fixedMatrix) shared(matrixesFromFile, resultMatrixes, matNum)
+    for(k = 0; k < matNum; k++) {
         matGf2 = matrixesFromFile[k];
         //iterate through columns and lines
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
+        //TODO развернуть цикл
+
+        for (j = 0; j < 4; j++) {
+            for (i = 0; i < 4; i++) {
                 //create one column
                 oneColumnMatrix.put(i, j, matGf2.get(i, j));
             }
-            //multiply columns
+
             mul(resultColumn, fixedMatrix, oneColumnMatrix);
-            for (int i = 0; i < 4; i++) {
+            for (i = 0; i < 4; i++) {
                 //put result
                 matGf2.put(i, j, resultColumn.get(i, j));
             }
-
+//        };
         }
         //add result to array
         resultMatrixes[k] = matGf2;
-
     }
-    resultFile << "\nTime: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
     //write result into file
-    for(int i = 0; i < matNum; i++){
-        resultFile << resultMatrixes[i];
+    double myTime = (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000);
+    cout << myTime;
+    ofstream resultFile;
+    resultFile.open (resultFileName, std::ios_base::app);
+    for(int a = 0; a < matNum; a++){
+        resultFile << resultMatrixes[a];
     }
-
+    resultFile << "\nTime: " << myTime << " ms" << std::endl;
+    resultFile.close();
+    delete [] resultMatrixes;
+    return myTime;
 }
 
 NTL::mat_GF2 createFixedMatrix() {

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int generateNMatrixes(int size, const char *fileName);
-NTL::mat_GF2 generateMatrix(NTL::mat_GF2& M, int p);
+long generateNMatrixes(int size, const string& fileName);
+NTL::mat_GF2 generateMatrix(NTL::mat_GF2& M, long p);
 
 #endif //SUPERCOMPUTERS_MATRIXGENERATOR_H

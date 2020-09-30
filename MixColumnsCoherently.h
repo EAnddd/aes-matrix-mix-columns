@@ -11,9 +11,9 @@
 #include <fstream>
 
 NTL::mat_GF2 createFixedMatrix();
-int mixColumns(const char *fileName, const char *resultFileName, int matrixQuantity);
-void readColumn(const char *name, int matrixQuantity);
+double mixColumns(const std::string& fileName,  const std::string& resultFileName,long matrixQuantity);
+double readColumn(const std::string& name,  const std::string& resultFileName, long matrixQuantity);
 void addLine(const char *fileName, NTL::mat_GF2& matGf2, NTL::mat_GF2 fixedMatrix[]);
-void count(std::ofstream &resultFile, NTL::mat_GF2 matrixesFromFile[], NTL::mat_GF2 &fixedMatrix);
+double count( NTL::mat_GF2 matrixesFromFile[],  const std::string& resultFileName);
 
 #endif //SUPERCOMPUTERS_MIXCOLUMNSCOHERENTLY_H
